@@ -1,0 +1,67 @@
+1. Install VS Code
+2. Install Node and NPM
+3. Install Angular CLI
+
+npm install -g @angular/cli@latest
+How to install Anguular 6...?
+Your global Angular CLI version (10.0.2) is greater than your local
+version (6.2.9). The local Angular CLI version is used.
+
+To disable this warning use "ng config -g cli.warnings.versionMismatch false".
+
+ng new dashboard
+
+Compile:   ng serve 
+
+npm install ngx-bootstrap --save
+npm install rxjs
+npm i rxjs-compat
+npm install alertify.js@^1.0.12 --save
+
+VS Studio
+Tools >> NuGet Package managers >> Console >>
+Install-Package Microsoft.AspNet.WebApi.Cors
+Install-Package AutoMapper
+
+Detected package version outside of dependency constraint: Microsoft.AspNetCore.App 2.1.1 requires Microsoft.EntityFrameworkCore.Tools (>= 2.1.1 && < 2.2.0)
+
+Install-Package Microsoft.EntityFrameworkCore.Tools -Version 2.1.8
+Migration
+add-migration initial_create
+update-database
+
+
+Q1:
+
+Add alerts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+ <img width="50" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<h2>Here are some links to help you start: </h2>
+<ul>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+  </li>
+</ul>
+
