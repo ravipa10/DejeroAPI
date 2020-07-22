@@ -117,7 +117,7 @@ namespace Dejero.Controllers
         }
 
         [HttpGet("View")]
-        public IActionResult viewFiles()
+        public IActionResult ViewFiles()
         {
             using (var _context = new ApplicationDbContext())
             {
@@ -134,7 +134,7 @@ namespace Dejero.Controllers
            
         }
 
-        [HttpDelete("DeleteFile/{FileId}")]
+        [HttpGet("Delete/{FileId}")]
         public IActionResult DeleteFile(int FileId)
         {
             using (var _context = new ApplicationDbContext())
@@ -159,7 +159,6 @@ namespace Dejero.Controllers
                     return Ok();
                 }
             }
-            
         }
     }
 }
