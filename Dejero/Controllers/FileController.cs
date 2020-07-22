@@ -17,7 +17,7 @@ namespace Dejero.Controllers
 {
     [Produces("application/json")]
     [Route("api/File")]
-    //[EnableCors(origins: "https://localhost/4200", headers: "*", methods: "*")]
+    [EnableCors(origins: "https://localhost/4200", headers: "*", methods: "*")]
     //[ApiController]
     public class FileController : Controller
     {
@@ -134,7 +134,7 @@ namespace Dejero.Controllers
            
         }
 
-        [HttpDelete("DeleteFile")]
+        [HttpDelete("DeleteFile/{FileId}")]
         public IActionResult DeleteFile(int FileId)
         {
             using (var _context = new ApplicationDbContext())
