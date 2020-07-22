@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200722000046_initial_create.cs" />
+    <Compile Remove="Migrations\20200722000046_initial_create.Designer.cs" />
+    <Compile Remove="Migrations\20200722001309_new_col_path.cs" />
+    <Compile Remove="Migrations\20200722001309_new_col_path.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -14,12 +21,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DAL\Models\" />
-    <Folder Include="DAL\Repositories\Interfaces\" />
-    <Folder Include="DAL\Repositories\" />
   </ItemGroup>
 
 </Project>

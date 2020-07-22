@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Hosting;
 using Dejero.Models;
 using System.Web.Http.Cors;
 using AutoMapper;
-//using DataAccessLayer.Repositories.Interfaces;
+using DataAccessLayer;
+using DataAccessLayer.Models;
+
 
 namespace Dejero.Controllers
 {
@@ -21,15 +23,10 @@ namespace Dejero.Controllers
     {
         private IHostingEnvironment hostingEnv;
         Random random = new System.Random();
-        //private IUnitOfWork unitOfWork;
-        //private readonly ApplicationDbContext _context;
-        //UnitOfWork _unitOfWork, ApplicationDbContext context
+
         public FileController(IHostingEnvironment _hostingEnv)
         {
-            //unitOfWork = _unitOfWork;
-            //context = _context;
-            hostingEnv = _hostingEnv;
-            
+            hostingEnv = _hostingEnv;            
         }
 
         [HttpPost("Upload"), DisableRequestSizeLimit]
@@ -87,7 +84,7 @@ namespace Dejero.Controllers
                     if (System.IO.File.Exists(fullPath))
                     {
                         int num = random.Next(100);
-                        fileName = fileName + "" + num;
+                        fileName = num + "" + fileName;
                         fullPath = Path.Combine(filePath, fileName);
                     }
 
@@ -97,19 +94,44 @@ namespace Dejero.Controllers
                     }
                     var fileUploaded = new FileViewModel
                     {
-                        FileName = fullPath,
+                        FileName = fileName,
+                        Path = fullPath,
                         Labels = labels,
                         UploadedAt = DateTime.Now,
                         ModifiedAt = DateTime.Now
                     };
 
-                    //var config = new MapperConfiguration(mc => mc.CreateMap<FileViewModel,Files>());
-                    //Mapper mapper = new Mapper(config);
-                    //Files toFile = mapper.Map<Files>(fileUploaded);
-                    //unitOfWork.Files.UploadFiles(toFile);
+                    using (var _context = new ApplicationDbContext())
+                    {
+                        var config = new MapperConfiguration(mc => mc.CreateMap<FileViewModel, Files>());
+                        Mapper mapper = new Mapper(config);
+                        Files toFile = mapper.Map<Files>(fileUploaded);
+
+                        _context.Files.Add(toFile);
+                        _context.SaveChanges();
+                    }
+                    
                 }
             }
             return Json("Upload Successful.");
+        }
+
+        [HttpGet("getAttachmentsForJob/{jobId}")]
+        public IActionResult getAttachmentsForJob(string jobId)
+        {
+            using (var _context = new ApplicationDbContext())
+            {
+                return Ok(_context.Files.Select(x => new FileViewModel()
+                {
+                    Id = x.Id,
+                    FileName = x.FileName,
+                    Path = x.Path,
+                    Labels = x.Labels,
+                    UploadedAt = x.UploadedAt,
+                    ModifiedAt = x.ModifiedAt
+                }).ToList());
+            }
+           
         }
     }
 }

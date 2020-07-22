@@ -12659,11 +12659,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pavit\\source\\repos\\Dejero\\Dejero\\Dejero.csproj",
+      "projectUniqueName": "C:\\Pavithra\\Profile\\Jobs\\Dejero\\DejeroAPI\\Dejero\\Dejero.csproj",
       "projectName": "Dejero",
-      "projectPath": "C:\\Users\\pavit\\source\\repos\\Dejero\\Dejero\\Dejero.csproj",
+      "projectPath": "C:\\Pavithra\\Profile\\Jobs\\Dejero\\DejeroAPI\\Dejero\\Dejero.csproj",
       "packagesPath": "C:\\Users\\pavit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pavit\\source\\repos\\Dejero\\Dejero\\obj\\",
+      "outputPath": "C:\\Pavithra\\Profile\\Jobs\\Dejero\\DejeroAPI\\Dejero\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
