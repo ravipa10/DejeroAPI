@@ -116,8 +116,8 @@ namespace Dejero.Controllers
             return Json("Upload Successful.");
         }
 
-        [HttpGet("getAttachmentsForJob/{jobId}")]
-        public IActionResult getAttachmentsForJob(string jobId)
+        [HttpGet("View")]
+        public IActionResult viewFiles()
         {
             using (var _context = new ApplicationDbContext())
             {
@@ -132,6 +132,34 @@ namespace Dejero.Controllers
                 }).ToList());
             }
            
+        }
+
+        [HttpDelete("DeleteFile")]
+        public IActionResult DeleteFile(int FileId)
+        {
+            using (var _context = new ApplicationDbContext())
+            {
+                var file = _context.Files.Where(x => x.Id == FileId).FirstOrDefault();
+                if (file == null)
+                {
+                    return BadRequest("File no longer exists");
+                }
+                else
+                {
+                    string fullPath = file.Path;
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+
+                    _context.Files.Remove(file);
+                    _context.SaveChanges();
+
+                    return Ok();
+                }
+            }
+            
         }
     }
 }
