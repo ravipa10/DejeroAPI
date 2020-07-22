@@ -13,9 +13,9 @@ namespace DataAccessLayer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string FileName { get; set; }
+        public string FileDesc { get; set; }
         public string Path { get; set; }
         public string Labels { get; set; }
         public DateTime UploadedAt { get; set; }
-        public DateTime ModifiedAt { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Dejero.Controllers
 {
     [Produces("application/json")]
     [Route("api/File")]
-    [EnableCors(origins: "https://localhost/4200", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://localhost/4200", headers: "*", methods: "*")]
     //[ApiController]
     public class FileController : Controller
     {
@@ -26,7 +26,7 @@ namespace Dejero.Controllers
 
         public FileController(IHostingEnvironment _hostingEnv)
         {
-            hostingEnv = _hostingEnv;            
+            hostingEnv = _hostingEnv;
         }
 
         [HttpPost("Upload"), DisableRequestSizeLimit]
@@ -34,10 +34,12 @@ namespace Dejero.Controllers
         {
             string fileName;
             string labels = "";
+            string fileDesc = "";
             var files = Enumerable.Range(0, file.Files.Count).Select(i => file.Files[i]);
             foreach (var f in files)
             {
                 string ext = Path.GetExtension(f.FileName);
+                // Add extensions here if you need to allow more file formats
                 if (String.IsNullOrEmpty(ext) ||
                  (!ext.Equals(".txt", StringComparison.OrdinalIgnoreCase) &&
                    !ext.Equals(".pdf", StringComparison.OrdinalIgnoreCase) &&
@@ -52,7 +54,16 @@ namespace Dejero.Controllers
                    !ext.Equals(".gif", StringComparison.OrdinalIgnoreCase) &&
                    !ext.Equals(".csv", StringComparison.OrdinalIgnoreCase) &&
                    !ext.Equals(".kml", StringComparison.OrdinalIgnoreCase) &&
-                   !ext.Equals(".gpx", StringComparison.OrdinalIgnoreCase)))
+                   !ext.Equals(".gpx", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".mov", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".mp4", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".wmv", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".flv", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".avi", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".mkv", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".webm", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".mts", StringComparison.OrdinalIgnoreCase) &&
+                   !ext.Equals(".m4v", StringComparison.OrdinalIgnoreCase)))
                 {
                     return BadRequest($"This file is not acceptable " + f.FileName);
                 }
@@ -79,7 +90,7 @@ namespace Dejero.Controllers
                         else
                             fileName = f.Name;
                     }
-                    
+
                     string fullPath = Path.Combine(filePath, fileName);
                     if (System.IO.File.Exists(fullPath))
                     {
@@ -95,10 +106,10 @@ namespace Dejero.Controllers
                     var fileUploaded = new FileViewModel
                     {
                         FileName = fileName,
+                        FileDesc = fileDesc,
                         Path = fullPath,
                         Labels = labels,
-                        UploadedAt = DateTime.Now,
-                        ModifiedAt = DateTime.Now
+                        UploadedAt = DateTime.Now
                     };
 
                     using (var _context = new ApplicationDbContext())
@@ -110,7 +121,7 @@ namespace Dejero.Controllers
                         _context.Files.Add(toFile);
                         _context.SaveChanges();
                     }
-                    
+
                 }
             }
             return Json("Upload Successful.");
@@ -125,13 +136,13 @@ namespace Dejero.Controllers
                 {
                     Id = x.Id,
                     FileName = x.FileName,
+                    FileDesc = x.FileDesc,
                     Path = x.Path,
                     Labels = x.Labels,
-                    UploadedAt = x.UploadedAt,
-                    ModifiedAt = x.ModifiedAt
+                    UploadedAt = x.UploadedAt
                 }).ToList());
             }
-           
+
         }
 
         [HttpGet("Delete/{FileId}")]
@@ -160,5 +171,32 @@ namespace Dejero.Controllers
                 }
             }
         }
+
+        [HttpPost("SaveMetadata"), DisableRequestSizeLimit]
+        public IActionResult SaveMetadata([FromBody] List<FileViewModel> fileList)
+        {
+            using (var _context = new ApplicationDbContext())
+            {
+                foreach (var x in fileList)
+                {
+                    var file = _context.Files.Find(x.Id);
+                    if (file == null)
+                    {
+                        return BadRequest("File no longer exists");
+                    }
+                    else
+                    {
+                        var config = new MapperConfiguration(mc => mc.CreateMap<FileViewModel, Files>());
+                        Mapper mapper = new Mapper(config);
+                        Files toFile = mapper.Map<Files>(x);
+                        _context.Files.Update(file);
+                        _context.SaveChanges();                        
+                    }
+                }
+                    
+            }
+            return Ok();
+        }
     }
 }
+    
